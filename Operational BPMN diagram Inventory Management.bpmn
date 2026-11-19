@@ -34,14 +34,6 @@
       <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">=yes_stock</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
     <bpmn:sequenceFlow id="Flow_113clnh" sourceRef="Activity_0p8zcrw" targetRef="Event_0d7a4nb" />
-    <bpmn:sendTask id="Activity_1s8f8ka" name="Tell producer that there&#39;s no stock">
-      <bpmn:extensionElements>
-        <zeebe:taskDefinition type="tell_producer_no_stock" />
-      </bpmn:extensionElements>
-      <bpmn:incoming>Flow_12k4wf4</bpmn:incoming>
-      <bpmn:outgoing>Flow_1yuo5my</bpmn:outgoing>
-    </bpmn:sendTask>
-    <bpmn:sequenceFlow id="Flow_1yuo5my" sourceRef="Activity_1s8f8ka" targetRef="Event_1scq9nr" />
     <bpmn:endEvent id="Event_0d7a4nb" name="Stock check completed">
       <bpmn:incoming>Flow_113clnh</bpmn:incoming>
     </bpmn:endEvent>
@@ -51,11 +43,6 @@
       <bpmn:outgoing>Flow_113clnh</bpmn:outgoing>
     </bpmn:task>
     <bpmn:sequenceFlow id="Flow_0n8ki36" sourceRef="Gateway_1elmc0n" targetRef="Activity_0p8zcrw" />
-    <bpmn:sequenceFlow id="Flow_1ymef5k" sourceRef="Activity_0uqpfly" targetRef="Gateway_1elmc0n" />
-    <bpmn:receiveTask id="Activity_0uqpfly" name="Wait for stock to be updated" messageRef="Message_3300esr">
-      <bpmn:incoming>Flow_0divjgv</bpmn:incoming>
-      <bpmn:outgoing>Flow_1ymef5k</bpmn:outgoing>
-    </bpmn:receiveTask>
     <bpmn:serviceTask id="Activity_14h148p" name="Check product inventory details">
       <bpmn:extensionElements>
         <zeebe:taskDefinition type="check_product_details" />
@@ -63,19 +50,35 @@
       <bpmn:incoming>Flow_1x9unhk</bpmn:incoming>
       <bpmn:outgoing>Flow_007sadc</bpmn:outgoing>
     </bpmn:serviceTask>
-    <bpmn:parallelGateway id="Gateway_1elmc0n">
-      <bpmn:incoming>Flow_19nmotw</bpmn:incoming>
-      <bpmn:incoming>Flow_1ymef5k</bpmn:incoming>
-      <bpmn:outgoing>Flow_0n8ki36</bpmn:outgoing>
-    </bpmn:parallelGateway>
-    <bpmn:sequenceFlow id="Flow_0divjgv" sourceRef="Event_1scq9nr" targetRef="Activity_0uqpfly" />
+    <bpmn:sendTask id="Activity_1s8f8ka" name="Tell producer that there&#39;s no stock">
+      <bpmn:extensionElements>
+        <zeebe:taskDefinition type="tell_producer_no_stock" />
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_12k4wf4</bpmn:incoming>
+      <bpmn:outgoing>Flow_1yuo5my</bpmn:outgoing>
+    </bpmn:sendTask>
+    <bpmn:receiveTask id="Activity_0uqpfly" name="Wait for stock to be updated" messageRef="Message_3300esr">
+      <bpmn:incoming>Flow_0divjgv</bpmn:incoming>
+      <bpmn:outgoing>Flow_1ymef5k</bpmn:outgoing>
+    </bpmn:receiveTask>
     <bpmn:intermediateCatchEvent id="Event_1scq9nr" name="Wait until producer updates stock level">
       <bpmn:incoming>Flow_1yuo5my</bpmn:incoming>
       <bpmn:outgoing>Flow_0divjgv</bpmn:outgoing>
       <bpmn:conditionalEventDefinition id="ConditionalEventDefinition_1cjzkyu">
-        <bpmn:condition xsi:type="bpmn:tFormalExpression">=wait_for_producer_to_update_stock</bpmn:condition>
+        <bpmn:extensionElements>
+          <zeebe:conditionalFilter />
+        </bpmn:extensionElements>
+        <bpmn:condition xsi:type="bpmn:tFormalExpression">=stock_is_updated</bpmn:condition>
       </bpmn:conditionalEventDefinition>
     </bpmn:intermediateCatchEvent>
+    <bpmn:sequenceFlow id="Flow_0divjgv" sourceRef="Event_1scq9nr" targetRef="Activity_0uqpfly" />
+    <bpmn:sequenceFlow id="Flow_1ymef5k" sourceRef="Activity_0uqpfly" targetRef="Gateway_1elmc0n" />
+    <bpmn:sequenceFlow id="Flow_1yuo5my" sourceRef="Activity_1s8f8ka" targetRef="Event_1scq9nr" />
+    <bpmn:exclusiveGateway id="Gateway_1elmc0n">
+      <bpmn:incoming>Flow_19nmotw</bpmn:incoming>
+      <bpmn:incoming>Flow_1ymef5k</bpmn:incoming>
+      <bpmn:outgoing>Flow_0n8ki36</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
   </bpmn:process>
   <bpmn:process id="Process_14yuz8y" isExecutable="false">
     <bpmn:sequenceFlow id="Flow_0hfzdz7" sourceRef="Event_145wra1" targetRef="Activity_1dqrpm0" />
@@ -127,10 +130,6 @@
           <dc:Bounds x="667" y="69" width="66" height="14" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_10s0086_di" bpmnElement="Activity_1s8f8ka">
-        <dc:Bounds x="550" y="200" width="100" height="80" />
-        <bpmndi:BPMNLabel />
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Event_0d7a4nb_di" bpmnElement="Event_0d7a4nb">
         <dc:Bounds x="1032" y="100" width="36" height="36" />
         <bpmndi:BPMNLabel>
@@ -141,21 +140,25 @@
         <dc:Bounds x="890" y="78" width="100" height="80" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_1mnfu3c_di" bpmnElement="Activity_0uqpfly">
-        <dc:Bounds x="760" y="200" width="100" height="80" />
-        <bpmndi:BPMNLabel />
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_1uouyq4_di" bpmnElement="Activity_14h148p">
         <dc:Bounds x="510" y="78" width="100" height="80" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Gateway_17niz7l_di" bpmnElement="Gateway_1elmc0n">
-        <dc:Bounds x="785" y="93" width="50" height="50" />
+      <bpmndi:BPMNShape id="Activity_10s0086_di" bpmnElement="Activity_1s8f8ka">
+        <dc:Bounds x="550" y="200" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1mnfu3c_di" bpmnElement="Activity_0uqpfly">
+        <dc:Bounds x="760" y="200" width="100" height="80" />
+        <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Event_0kp05ky_di" bpmnElement="Event_1scq9nr">
         <dc:Bounds x="692" y="222" width="36" height="36" />
         <bpmndi:BPMNLabel>
           <dc:Bounds x="667" y="265" width="86" height="40" />
         </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_0cx63m6_di" bpmnElement="Gateway_1elmc0n" isMarkerVisible="true">
+        <dc:Bounds x="785" y="93" width="50" height="50" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="Flow_1a3kai0_di" bpmnElement="Flow_1a3kai0">
         <di:waypoint x="296" y="118" />
@@ -189,21 +192,21 @@
         <di:waypoint x="990" y="118" />
         <di:waypoint x="1032" y="118" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_1yuo5my_di" bpmnElement="Flow_1yuo5my">
-        <di:waypoint x="650" y="240" />
-        <di:waypoint x="692" y="240" />
-      </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_0n8ki36_di" bpmnElement="Flow_0n8ki36">
         <di:waypoint x="835" y="118" />
         <di:waypoint x="890" y="118" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0divjgv_di" bpmnElement="Flow_0divjgv">
+        <di:waypoint x="728" y="240" />
+        <di:waypoint x="760" y="240" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_1ymef5k_di" bpmnElement="Flow_1ymef5k">
         <di:waypoint x="810" y="200" />
         <di:waypoint x="810" y="143" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_0divjgv_di" bpmnElement="Flow_0divjgv">
-        <di:waypoint x="728" y="240" />
-        <di:waypoint x="760" y="240" />
+      <bpmndi:BPMNEdge id="Flow_1yuo5my_di" bpmnElement="Flow_1yuo5my">
+        <di:waypoint x="650" y="240" />
+        <di:waypoint x="692" y="240" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape id="Participant_0o54z3c_di" bpmnElement="Participant_0o54z3c" isHorizontal="true">
         <dc:Bounds x="210" y="390" width="888" height="150" />

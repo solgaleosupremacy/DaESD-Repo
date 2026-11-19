@@ -1,0 +1,198 @@
+{
+  "actors": [
+    {
+      "id": "cd22dd93-d3d4-4d9c-9460-018da5995621",
+      "text": "Producer",
+      "type": "istar.Role",
+      "x": 81,
+      "y": 124,
+      "customProperties": {
+        "Description": ""
+      },
+      "nodes": []
+    },
+    {
+      "id": "0622d824-587b-4819-829a-f610a2af3772",
+      "text": "Marketplace System",
+      "type": "istar.Agent",
+      "x": 753,
+      "y": 110,
+      "customProperties": {
+        "Description": ""
+      },
+      "nodes": []
+    },
+    {
+      "id": "d001fa40-e92e-4611-993a-8e5de9e03a98",
+      "text": "External Certification Verifier",
+      "type": "istar.Agent",
+      "x": 81,
+      "y": 552,
+      "customProperties": {
+        "Description": ""
+      },
+      "nodes": []
+    }
+  ],
+  "orphans": [],
+  "dependencies": [
+    {
+      "id": "d75ef470-58d7-4f2e-9848-efac2dc60209",
+      "text": "List Product on Network",
+      "type": "istar.Goal",
+      "x": 388,
+      "y": 45,
+      "customProperties": {
+        "Description": ""
+      },
+      "source": "cd22dd93-d3d4-4d9c-9460-018da5995621",
+      "target": "0622d824-587b-4819-829a-f610a2af3772"
+    },
+    {
+      "id": "0171acaf-9b4e-4be5-b0a5-0ad24efd40cc",
+      "text": "Listing Status Notifications",
+      "type": "istar.Resource",
+      "x": 403,
+      "y": 152,
+      "customProperties": {
+        "Description": ""
+      },
+      "source": "cd22dd93-d3d4-4d9c-9460-018da5995621",
+      "target": "0622d824-587b-4819-829a-f610a2af3772"
+    },
+    {
+      "id": "b730f2df-6565-4191-bc73-b2dc952b4d33",
+      "text": "Up to date stock information",
+      "type": "istar.Resource",
+      "x": 404,
+      "y": 196,
+      "customProperties": {
+        "Description": ""
+      },
+      "source": "0622d824-587b-4819-829a-f610a2af3772",
+      "target": "cd22dd93-d3d4-4d9c-9460-018da5995621"
+    },
+    {
+      "id": "aa788215-75ba-41a4-b22b-7fef144accf0",
+      "text": "Vendor Certification Status",
+      "type": "istar.Resource",
+      "x": 447,
+      "y": 325,
+      "customProperties": {
+        "Description": ""
+      },
+      "source": "0622d824-587b-4819-829a-f610a2af3772",
+      "target": "d001fa40-e92e-4611-993a-8e5de9e03a98"
+    },
+    {
+      "id": "c119adc9-317c-4d40-a2dd-715f271771a2",
+      "text": "Verify Vendor Certifications",
+      "type": "istar.Task",
+      "x": 497,
+      "y": 378,
+      "customProperties": {
+        "Description": ""
+      },
+      "source": "0622d824-587b-4819-829a-f610a2af3772",
+      "target": "d001fa40-e92e-4611-993a-8e5de9e03a98"
+    },
+    {
+      "id": "488817e4-fc52-4518-a73e-0b8ede9ece77",
+      "text": "Add Products to Inventory",
+      "type": "istar.Task",
+      "x": 400,
+      "y": 105,
+      "customProperties": {
+        "Description": ""
+      },
+      "source": "0622d824-587b-4819-829a-f610a2af3772",
+      "target": "cd22dd93-d3d4-4d9c-9460-018da5995621"
+    }
+  ],
+  "links": [
+    {
+      "id": "66413bcd-5400-464a-8452-4ca15ccf1052",
+      "type": "istar.DependencyLink",
+      "source": "488817e4-fc52-4518-a73e-0b8ede9ece77",
+      "target": "cd22dd93-d3d4-4d9c-9460-018da5995621"
+    },
+    {
+      "id": "c319d4ba-e8e8-4ec1-8912-3ad2ce1505c7",
+      "type": "istar.DependencyLink",
+      "source": "0622d824-587b-4819-829a-f610a2af3772",
+      "target": "488817e4-fc52-4518-a73e-0b8ede9ece77"
+    },
+    {
+      "id": "ef67a0d2-3761-4c76-926b-d539a49754d7",
+      "type": "istar.DependencyLink",
+      "source": "c119adc9-317c-4d40-a2dd-715f271771a2",
+      "target": "d001fa40-e92e-4611-993a-8e5de9e03a98"
+    },
+    {
+      "id": "ac8b1a53-f654-4e8f-b620-6219d788e823",
+      "type": "istar.DependencyLink",
+      "source": "0622d824-587b-4819-829a-f610a2af3772",
+      "target": "c119adc9-317c-4d40-a2dd-715f271771a2"
+    },
+    {
+      "id": "bd621965-48f7-4cc0-bcfb-899c178264c1",
+      "type": "istar.DependencyLink",
+      "source": "aa788215-75ba-41a4-b22b-7fef144accf0",
+      "target": "d001fa40-e92e-4611-993a-8e5de9e03a98"
+    },
+    {
+      "id": "e03c0b79-716e-44cf-bfbd-5491e8bcfa7a",
+      "type": "istar.DependencyLink",
+      "source": "0622d824-587b-4819-829a-f610a2af3772",
+      "target": "aa788215-75ba-41a4-b22b-7fef144accf0"
+    },
+    {
+      "id": "262d143f-437f-41bc-b86a-16c085634512",
+      "type": "istar.DependencyLink",
+      "source": "b730f2df-6565-4191-bc73-b2dc952b4d33",
+      "target": "cd22dd93-d3d4-4d9c-9460-018da5995621"
+    },
+    {
+      "id": "c50e5e61-5dcf-4381-b73b-ed4659a966ee",
+      "type": "istar.DependencyLink",
+      "source": "0622d824-587b-4819-829a-f610a2af3772",
+      "target": "b730f2df-6565-4191-bc73-b2dc952b4d33"
+    },
+    {
+      "id": "5dc0278e-bcc5-41e5-986d-a3ddb999972f",
+      "type": "istar.DependencyLink",
+      "source": "0171acaf-9b4e-4be5-b0a5-0ad24efd40cc",
+      "target": "0622d824-587b-4819-829a-f610a2af3772"
+    },
+    {
+      "id": "0c63fb53-bea2-44d1-9660-0e69115966d0",
+      "type": "istar.DependencyLink",
+      "source": "cd22dd93-d3d4-4d9c-9460-018da5995621",
+      "target": "0171acaf-9b4e-4be5-b0a5-0ad24efd40cc"
+    },
+    {
+      "id": "018a5fba-6843-4137-b276-39f3cd2f4ccb",
+      "type": "istar.DependencyLink",
+      "source": "d75ef470-58d7-4f2e-9848-efac2dc60209",
+      "target": "0622d824-587b-4819-829a-f610a2af3772"
+    },
+    {
+      "id": "79e6bdba-c184-49f8-a7c9-4fb09a098a5b",
+      "type": "istar.DependencyLink",
+      "source": "cd22dd93-d3d4-4d9c-9460-018da5995621",
+      "target": "d75ef470-58d7-4f2e-9848-efac2dc60209"
+    }
+  ],
+  "display": {},
+  "tool": "pistar.2.1.0",
+  "istar": "2.0",
+  "saveDate": "Mon, 16 Nov 2026 14:21:43 GMT",
+  "diagram": {
+    "width": 1000,
+    "height": 752,
+    "name": "Welcome Model",
+    "customProperties": {
+      "Description": "Welcome to the piStar tool version 2.1.0, released on November, 2021! This model describes some of the recent improvements in the tool. Click on the purple elements for further info.\n\nFor help using this tool, please check the Help menu above"
+    }
+  }
+}

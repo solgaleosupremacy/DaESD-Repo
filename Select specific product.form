@@ -1,0 +1,29 @@
+{
+  "executionPlatform": "Camunda Cloud",
+  "executionPlatformVersion": "8.10.0",
+  "exporter": {
+    "name": "Camunda Web Modeler",
+    "version": "19abde7"
+  },
+  "schemaVersion": 19,
+  "id": "select-specific-product-05zcmsq",
+  "components": [
+    {
+      "label": "Select a product",
+      "values": [
+        {
+          "label": "Value",
+          "value": "value"
+        }
+      ],
+      "type": "select",
+      "layout": {
+        "row": "Row_0deok2c",
+        "columns": null
+      },
+      "id": "Field_1rycaz1",
+      "key": "select_uziwn6"
+    }
+  ],
+  "type": "default"
+}

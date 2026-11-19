@@ -1,0 +1,23 @@
+{
+  "executionPlatform": "Camunda Cloud",
+  "executionPlatformVersion": "8.10.0",
+  "exporter": {
+    "name": "Camunda Web Modeler",
+    "version": "19abde7"
+  },
+  "schemaVersion": 19,
+  "id": "update-stock-level-1x0hgsi",
+  "components": [
+    {
+      "label": "How much more stock is getting added",
+      "type": "number",
+      "layout": {
+        "row": "Row_1c6xkjt",
+        "columns": null
+      },
+      "id": "Field_0omvhwf",
+      "key": "number_ivon5"
+    }
+  ],
+  "type": "default"
+}

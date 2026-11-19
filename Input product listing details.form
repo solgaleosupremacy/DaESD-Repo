@@ -1,0 +1,48 @@
+{
+  "executionPlatform": "Camunda Cloud",
+  "executionPlatformVersion": "8.10.0",
+  "exporter": {
+    "name": "Camunda Web Modeler",
+    "version": "19abde7"
+  },
+  "schemaVersion": 19,
+  "id": "input-product-listing-details-1uzhqg8",
+  "components": [
+    {
+      "label": "Product Name",
+      "type": "textarea",
+      "layout": {
+        "row": "Row_0s4gyw1",
+        "columns": null
+      },
+      "id": "Field_15vu300",
+      "key": "textarea_5wzja",
+      "description": "The name of the product you are trying to list"
+    },
+    {
+      "label": "Stock Count",
+      "type": "number",
+      "layout": {
+        "row": "Row_1nskso0",
+        "columns": null
+      },
+      "id": "Field_1friwbc",
+      "key": "number_8qdhke",
+      "description": "How much of this product are you listing",
+      "defaultValue": 1,
+      "decimalDigits": 0
+    },
+    {
+      "label": "Are you organically certified for this product?",
+      "type": "checkbox",
+      "layout": {
+        "row": "Row_04kzjxn",
+        "columns": null
+      },
+      "id": "Field_1yh1zlp",
+      "key": "checkbox_l9qr7i",
+      "description": "This will be verified by an external service"
+    }
+  ],
+  "type": "default"
+}
